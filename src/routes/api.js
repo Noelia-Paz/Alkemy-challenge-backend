@@ -1,7 +1,11 @@
 const router = require("express").Router();
 
-const apiBlogsRouter = require("./api/blog");
+const blogControllers = require("../controllers/blog");
 
-router.use("/blog", apiBlogsRouter);
+router.use("/blog", blogControllers);
+
+const userControllers = require("../controllers/authController");
+
+router.use("/user", userControllers);
 
 module.exports = router;
