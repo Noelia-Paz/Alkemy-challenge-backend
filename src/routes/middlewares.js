@@ -2,7 +2,6 @@ const { Blog } = require("../database");
 
 const verificaciones = {};
 
-//revisa el formato de la imagen antes
 verificaciones.verificarImagen = (req, res, next) => {
   const extensionesValidas = ".png, .gif, .jpeg, .jpg";
   const imagen = req.body.imagen;
@@ -15,7 +14,6 @@ verificaciones.verificarImagen = (req, res, next) => {
   }
 };
 
-//enviar un mensaje de error si no existe el id
 verificaciones.verificarId = async (req, res, next) => {
   const blog = await Blog.findAll({ where: { id: Number(req.params.blogId) } });
   if (blog.length > 0) {

@@ -35,16 +35,32 @@ router.post("/signin", async (req, res, next) => {
   });
 
   if (!user.length) {
-    return res.status(404).send("el email no existe");
+    return res.json({
+      status: 404,
+      message: "El email no existe",
+    });
   }
 
   const validPassword = await bcrypt.compare(password, user[0].password);
+
+  if (!validPassword) {
+    return res.json({
+      status: 404,
+      message: "La contrasena es incorrecta",
+    });
+  }
+
   const isAdmin = user[0].admin;
 
   if (validPassword && isAdmin) {
-    const token = jwt.sign({ id: user.id }, "secret", process.env.SECRET, {
-      expiresIn: 60 * 60 * 24,
-    });
+    const token = jwt.sign(
+      { isAdmin: user[0].admin },
+      "secret",
+      config.secret,
+      {
+        expiresIn: 60 * 60 * 24,
+      }
+    );
     res.json({ auth: true, token });
   }
 });

@@ -1,4 +1,3 @@
-//modelo de la tabl
 module.exports = (sequelize, type) => {
   return sequelize.define(
     "blog",

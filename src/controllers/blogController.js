@@ -5,8 +5,8 @@ const { Blog, Categoria } = require("../database");
 const { verificaciones } = require("../routes/middlewares");
 
 router.get("/", async (req, res) => {
-  const blog = await Blog.findAll();
-  res.json(blog);
+  const blogs = await Blog.findAll();
+  res.json(blogs);
 });
 
 router.get("/:blogId", verificaciones.verificarId, async (req, res) => {
@@ -34,6 +34,7 @@ router.put(
   verificaciones.verificarImagen,
   verificaciones.verificarId,
   async (req, res) => {
+    console.log(req);
     const blog = await Blog.update(req.body, {
       where: { id: req.params.blogId },
     });
